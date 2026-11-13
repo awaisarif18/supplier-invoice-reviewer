@@ -6,7 +6,7 @@ const instructions = [
   'For each field return the value, its page number and an exact supporting quote. Return null if absent or ambiguous.',
   'Use YYYY-MM-DD dates, plain decimal numbers, and explicit ISO currency codes only when supported.',
   'Use the SKU when shown, otherwise the explicit item name. Return all readable lines and explicit fixed rates.',
-  'Use the exact pricing row or clause as the price quote. Dates are start-inclusive and end-exclusive. Convert explicitly inclusive end dates to the following day. Return Open only when the agreement explicitly states an ongoing rate.',
+  'Use the exact pricing row or clause as the price quote. Dates are start-inclusive and end-exclusive. Convert explicitly inclusive end dates to the following day. Return the literal value Open when the agreement explicitly indicates no end date, for example with a To: Open field.',
   'Do not invent missing dates or determine which rate applies. Do not calculate or approve amounts.',
 ].join(' ');
 
@@ -20,7 +20,7 @@ export async function extractWithModel(documents, key, fetcher = fetch, model = 
     body: JSON.stringify({
       systemInstruction: { parts: [{ text: instructions }] },
       contents: [{ role: 'user', parts: [{ text: JSON.stringify(documents) }] }],
-      generationConfig: { maxOutputTokens: 9000, responseMimeType: 'application/json', responseJsonSchema },
+      generationConfig: { temperature: 0, maxOutputTokens: 9000, responseMimeType: 'application/json', responseJsonSchema },
     }),
     signal: AbortSignal.timeout(45_000),
   });
@@ -61,7 +61,7 @@ export function createExtractionHandler({ key = process.env.GEMINI_API_KEY, mode
     if (!request.headers['content-type']?.startsWith('application/json') || request.headers['sec-fetch-site'] === 'cross-site') {
       return reply(415, { error: 'Use the invoice upload form to submit documents.' });
     }
-    if (!key) return reply(503, { error: 'AI extraction for your own PDFs is not configured on this server. Use the bundled café PDFs or enter the details manually.' });
+    if (!key) return reply(503, { error: 'Gemini extraction is not configured on this server. Try the bundled sample PDFs or enter the details manually.' });
     let documents;
     try { documents = requestSchema.parse(await readBody(request)); }
     catch { return reply(400, { error: 'The document text is missing or too long. Try a shorter PDF.' }); }

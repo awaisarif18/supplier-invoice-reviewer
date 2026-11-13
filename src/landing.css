@@ -1,0 +1,154 @@
+@import './theme.css';
+
+.landing {
+  --display: 'Instrument Serif', Georgia, serif;
+  --frame: 1220px;
+  min-height: 100svh;
+}
+
+.wrap {
+  width: min(var(--frame), calc(100% - 112px));
+  margin-inline: auto;
+}
+
+.site-header {
+  min-height: 84px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  border-bottom: 1px solid #cbd2c6;
+  gap: 15px;
+}
+
+.site-header .brand { text-decoration: none; }
+.site-header .brand { color: var(--forest); }
+.header-link, .text-link, .site-footer a { text-underline-offset: .25em; }
+.header-link { font-size: .9rem; font-weight: 620; }
+
+.hero {
+  display: grid;
+  grid-template-columns: 1fr minmax(0, .94fr);
+  align-items: center;
+  column-gap: clamp(36px, 6vw, 96px);
+  row-gap: 36px;
+  padding-block: clamp(70px, 7vw, 96px);
+}
+
+.hero h1 {
+  font: 400 clamp(3.1rem, 5.85vw, 5.25rem)/.91 var(--display);
+  letter-spacing: -.035em;
+  color: var(--forest);
+  text-wrap: balance;
+}
+
+.hero h1 em { font-style: normal; color: #426853; }
+.hero-copy p { max-width: 41ch; margin: 27px 0 27px; color: var(--muted); font-size: 1.05rem; line-height: 1.65; }
+.primary {
+  display: inline-flex;
+  justify-content: center;
+  align-items: center;
+  gap: 18px;
+  min-height: 48px;
+  padding: 10px 16px;
+  border-radius: 6px;
+  background: var(--forest);
+  color: #fffdf8;
+  font-weight: 650;
+  text-decoration: none;
+  white-space: nowrap;
+}
+.primary:hover { background: #305546; }
+.text-link { display: inline-block; padding: 11px 0; margin-left: 17px; font-size: .88rem; font-weight: 630; }
+
+.proof {
+  min-width: 0;
+  background: var(--sheet);
+  border-radius: 12px;
+  box-shadow: 0 12px 34px rgb(35 59 49 / 11%);
+  overflow: clip;
+}
+
+.proof-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: end;
+  gap: 12px;
+  padding: 21px clamp(17px, 3vw, 30px) 18px;
+  color: #fffdf8;
+  background: var(--forest);
+}
+
+.proof-header h2 { margin-top: 2px; font-size: 1.55rem; letter-spacing: -.03em; }
+.proof-header p, .proof-date span { color: #d3e0d5; font-size: .78rem; }
+.proof-date { text-align: right; }
+.proof-date time { display: block; margin-top: 3px; font-size: .92rem; }
+.proof-body { padding: 19px clamp(15px, 3vw, 30px) 12px; }
+.proof-item { display: flex; justify-content: space-between; gap: 8px; margin-bottom: 12px; font-size: .88rem; }
+.proof-item span { color: var(--muted); white-space: nowrap; }
+.proof table { width: 100%; border-collapse: collapse; font-variant-numeric: tabular-nums; font-size: .9rem; }
+.proof th, .proof td { padding: 9px 8px; text-align: right; border-bottom: 1px solid var(--line); }
+.proof th:first-child { text-align: left; }
+.proof thead th { color: var(--muted); font-weight: 600; font-size: .78rem; white-space: nowrap; }
+.proof tbody th { font-weight: 530; }
+.proof-contract { background: var(--green-bg); font-weight: 670; }
+.proof-finding {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 10px;
+  margin-top: 15px;
+  padding: 12px 13px;
+  border-radius: 6px;
+  color: var(--amber);
+  background: var(--amber-bg);
+}
+.proof-finding p { margin-top: 4px; font-size: .78rem; }
+.proof-finding > strong { font-size: clamp(1.42rem, 2.5vw, 1.9rem); letter-spacing: -.03em; font-variant-numeric: tabular-nums; }
+.proof-source { margin-top: 8px; font-size: .85rem; }
+.proof-source summary { display: flex; min-height: 42px; cursor: pointer; justify-content: space-between; align-items: center; list-style: none; color: var(--link); }
+.proof-source summary::-webkit-details-marker { display: none; }
+.proof-source summary:hover span { text-decoration: underline; }
+.proof-source[open] svg { rotate: 180deg; }
+.proof-source > div { padding: 8px 0 9px; border-top: 1px solid var(--line); line-height: 1.55; }
+.proof-source > div p { font-weight: 650; margin-bottom: 5px; }
+
+.samples { padding-block: 54px 60px; background: var(--sheet); border-block: 1px solid var(--line); }
+.sample-grid { display: grid; grid-template-columns: .8fr 1.2fr; gap: 36px 76px; }
+.samples h2 { font: 400 clamp(2.7rem, 4.5vw, 4.15rem)/.98 var(--display); letter-spacing: -.025em; color: var(--forest); }
+.samples p { max-width: 34ch; margin-top: 14px; color: var(--muted); line-height: 1.55; }
+.samples ul { margin: 0; padding: 0; list-style: none; border-top: 1px solid var(--line); }
+.samples li { border-bottom: 1px solid var(--line); }
+.samples li a { display: flex; align-items: center; justify-content: space-between; gap: 10px; min-height: 65px; padding: 9px 7px; text-decoration: none; }
+.samples li a:hover { background: var(--paper); }
+.samples li a:hover strong { text-decoration: underline; }
+.samples li small { display: block; margin-top: 3px; color: var(--muted); font-size: .83rem; }
+.site-footer { display: flex; flex-wrap: wrap; justify-content: space-between; gap: 10px; padding-block: 24px; color: var(--muted); font-size: .85rem; }
+
+@media (max-width: 1020px) {
+  .wrap { width: calc(100% - 64px); }
+}
+
+@media (max-width: 790px) {
+  .wrap { width: calc(100% - 40px); }
+  .hero { grid-template-columns: 1fr; padding-block: 53px 58px; }
+  .hero h1 { font-size: clamp(2.75rem, 12.6vw, 5.25rem); text-wrap: initial; }
+  .sample-grid { grid-template-columns: 1fr; row-gap: 23px; }
+  .site-header { min-height: 68px; }
+}
+
+@media (max-width: 390px) {
+  .hero-copy p { margin-block: 20px; }
+  .text-link { margin-left: 12px; }
+  .proof th, .proof td { padding-inline: 4px; }
+}
+
+.proof-inputs { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 10px; margin-bottom: 15px; }
+.proof-inputs label { display: flex; flex-direction: column; justify-content: end; gap: 5px; font-size: .82rem; font-weight: 650; }
+.proof-inputs input { min-height: 44px; width: 100%; padding: 8px; background: var(--sheet); color: var(--ink); border: 1px solid #7a8a7b; border-radius: 6px; font: inherit; font-size: 1rem; font-variant-numeric: tabular-nums; }
+.proof-inputs input[aria-invalid="true"] { border-color: #9e2727; }
+.proof-matched { color: var(--forest); background: var(--green-bg); }
+.proof-finding { flex-wrap: wrap; }
+.proof-finding > strong { margin-left: auto; }
+.proof-actions { display: flex; flex-wrap: wrap; align-items: baseline; gap: 0 14px; }
+.proof-source { flex: 1 1 185px; }
+.proof-reset { padding: 6px 0; min-height: 44px; color: var(--link); background: transparent; border: 0; text-decoration: underline; text-underline-offset: .2em; font-size: .83rem; }

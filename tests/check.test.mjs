@@ -1,10 +1,10 @@
 import assert from 'node:assert/strict';
 import { readFileSync } from 'node:fs';
 import test from 'node:test';
-import { checkPrice } from '../public/check.mjs';
+import { checkPrice } from '../src/check.ts';
 
 const { cases: [oldRate, correctRate, missingClause], rates } = JSON.parse(
-  readFileSync(new URL('../public/fixtures.json', import.meta.url)),
+  readFileSync(new URL('../src/fixtures.json', import.meta.url)),
 );
 
 test('old PO rate matches invoice yet overcharges by $200', () => {

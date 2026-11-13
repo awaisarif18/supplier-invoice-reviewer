@@ -1,11 +1,13 @@
+import type { Invoice, Rate } from './types.ts';
+
 /**
  * Compare a single invoice line in USD. Rate periods include their start and
  * exclude their end. Fixture dates use ISO YYYY-MM-DD for direct comparison.
  */
-export function checkPrice(invoice, rates) {
+export function checkPrice(invoice: Invoice, rates: Rate[]) {
   const { supplierId, item, invoiceDate, chargedCents, poCents, quantity } = invoice;
   const invoicedCents = chargedCents * quantity;
-  const poMatches = chargedCents === poCents;
+  const poMatches = poCents === null ? null : chargedCents === poCents;
   const applicable = rates.filter(rate =>
     rate.supplierId === supplierId &&
     rate.item === item &&

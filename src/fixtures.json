@@ -1,0 +1,11 @@
+{
+  "cases": [
+    {"id":"old-rate","name":"Old rate","invoiceId":"INV-2101","line":1,"supplierId":"HCR","supplier":"Harbor Coffee Roasters","item":"HOUSE-1KG","description":"House blend coffee, 1 kg bag","invoiceDate":"2026-06-18","quantity":100,"chargedCents":1200,"poId":"PO-901","poCents":1200},
+    {"id":"correct-rate","name":"Correct rate","invoiceId":"INV-2102","line":1,"supplierId":"HCR","supplier":"Harbor Coffee Roasters","item":"HOUSE-1KG","description":"House blend coffee, 1 kg bag","invoiceDate":"2026-06-19","quantity":100,"chargedCents":1000,"poId":"PO-902","poCents":1000},
+    {"id":"missing-clause","name":"Missing clause","invoiceId":"INV-2103","line":1,"supplierId":"HCR","supplier":"Harbor Coffee Roasters","item":"DECAF-1KG","description":"Decaf coffee, 1 kg bag","invoiceDate":"2026-06-22","quantity":100,"chargedCents":1200,"poId":"PO-903","poCents":1200}
+  ],
+  "rates": [
+    {"supplierId":"HCR","item":"HOUSE-1KG","effectiveFrom":"2026-01-01","effectiveTo":"2026-06-01","unitCents":1200,"source":"Coffee supply agreement · §2.1","document":"Original agreement","clause":"Harbor Coffee Roasters will charge the café $12 per 1 kg bag of house blend through May 31, 2026."},
+    {"supplierId":"HCR","item":"HOUSE-1KG","effectiveFrom":"2026-06-01","effectiveTo":null,"unitCents":1000,"source":"AMD-01 · §2.1","document":"Signed price update","clause":"Starting June 1, 2026, the café pays $10 per 1 kg bag of house blend. This replaces the $12 price in the original agreement."}
+  ]
+}

@@ -1,30 +1,5 @@
-:root {
-  color-scheme: light;
-  --paper: #eef1eb;
-  --sheet: #fffdf8;
-  --ink: #232a24;
-  --muted: #555e54;
-  --line: #dfdfd4;
-  --forest: #233b31;
-  --link: #285c47;
-  --amber: #6c440c;
-  --amber-bg: #fff1d7;
-  --green-bg: #e6efe4;
-  --radius: 12px;
-  font-family: "Segoe UI", system-ui, sans-serif;
-  font-synthesis: none;
-  color: var(--ink);
-  background: var(--paper);
-}
-
-* { box-sizing: border-box; }
-body { margin: 0; min-height: 100vh; display: grid; grid-template-columns: 230px minmax(0, 1fr); }
-h1, h2, h3, p, dl, dd, blockquote { margin: 0; }
-button, textarea { font: inherit; }
-button { cursor: pointer; }
-a { color: var(--link); text-underline-offset: 0.2em; }
-::selection { background: #d4e8cc; color: var(--ink); }
-:focus-visible { outline: 2px solid #277759; outline-offset: 3px; }
+@import './theme.css';
+.review-layout { min-height: 100vh; display: grid; grid-template-columns: 230px minmax(0, 1fr); }
 .rail :focus-visible { outline-color: #c9e9cf; }
 
 .rail {
@@ -35,11 +10,10 @@ a { color: var(--link); text-underline-offset: 0.2em; }
   flex-direction: column;
   min-width: 0;
 }
-.brand { display: flex; align-items: center; gap: 12px; margin: 0 7px 58px; font-weight: 720; line-height: 1.14; letter-spacing: -0.02em; }
-.brand-mark { display: grid; place-items: center; width: 38px; height: 38px; border: 1px solid #98b6a4; border-radius: 8px; color: #dcebdc; }
+.rail .brand { margin: 0 7px 58px; color: #f4f6ed; text-decoration: none; }
 .rail h2 { margin: 0 9px 11px; font-size: 0.83rem; color: #c4d3c7; font-weight: 600; }
 #cases { display: grid; gap: 5px; }
-#cases button {
+#cases a {
   min-width: 0;
   width: 100%;
   min-height: 56px;
@@ -52,10 +26,10 @@ a { color: var(--link); text-underline-offset: 0.2em; }
   background: transparent;
   border-radius: 8px;
 }
-#cases button strong { font-size: 0.91rem; }
-#cases button small { color: #bed1c3; font-size: 0.74rem; font-variant-numeric: tabular-nums; }
-#cases button:hover { background: #304a3d; }
-#cases button[aria-current] { background: #385649; border-color: #6a8977; }
+#cases a strong { font-size: 0.91rem; }
+#cases a small { color: #bed1c3; font-size: 0.74rem; font-variant-numeric: tabular-nums; }
+#cases a:hover { background: #304a3d; }
+#cases a[aria-current] { background: #385649; border-color: #6a8977; }
 .rail-note { color: #bed1c3; margin: auto 8px 0; padding-top: 36px; font-size: 0.77rem; }
 
 main { width: 100%; max-width: 1350px; margin-inline: auto; padding: 43px 45px 54px; }
@@ -141,19 +115,19 @@ textarea::placeholder { color: #60685d; }
 .storage-note.save-error { color: #9e2727; }
 
 @media (max-width: 1050px) {
-  body { grid-template-columns: 186px minmax(0, 1fr); }
+  .review-layout { grid-template-columns: 186px minmax(0, 1fr); }
   main { padding-inline: 25px; }
   .rail { padding-inline: 15px; }
   .comparison, .decision, .invoice-head { padding-inline: 17px; }
 }
 @media (max-width: 790px) {
-  body { display: block; }
+  .review-layout { display: block; }
   .rail { padding: 15px 18px; }
-  .brand { margin: 0 0 13px; }
+  .rail .brand { margin: 0 0 13px; }
   .rail-note { display: none; }
   .rail h2 { margin-left: 0; }
   #cases { grid-template-columns: repeat(3, minmax(0, 1fr)); }
-  #cases button { padding-inline: 8px; }
+  #cases a { padding-inline: 8px; }
   main { padding: 25px 17px 35px; }
 }
 @media (max-width: 590px) {
@@ -165,3 +139,46 @@ textarea::placeholder { color: #60685d; }
   .source-fields { grid-template-columns: repeat(2, 1fr); }
   th, td { padding-inline: 6px; }
 }
+
+#cases a { text-decoration: none; }
+
+.rail nav .custom-link { display: block; margin-top: 15px; padding: 9px 10px; color: #f4f6ed; font-size: .85rem; }
+.rail nav .custom-link[aria-current="page"] { background: #355246; border-radius: 6px; }
+.source svg { max-width: 17px; }
+
+.input-sheet { background: var(--sheet); border: 1px solid var(--line); border-radius: var(--radius); padding: clamp(16px, 3vw, 27px); }
+.input-sheet fieldset { min-width: 0; border: 0; margin: 0; padding: 0; }
+.input-sheet > fieldset + fieldset { margin-top: 23px; }
+.input-sheet legend { font-size: 1.05rem; font-weight: 680; padding: 0; }
+.input-sheet fieldset > p { color: var(--muted); font-size: .85rem; margin: 5px 0 12px; }
+.input-grid { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 8px 14px; }
+.input-grid input { display: block; width: 100%; min-width: 0; min-height: 42px; font: inherit; font-weight: 400; color: var(--ink); border: 1px solid #aeb6a8; border-radius: 6px; background: var(--sheet); padding: 8px; margin-top: 5px; }
+.rate-toggle { display: flex; align-items: center; gap: 8px; min-height: 36px; margin-top: 4px; }
+.rate-toggle input { accent-color: var(--link); }
+.clause-label { margin-top: 7px; }
+.clause-label textarea { margin-top: 6px; font-weight: 400; }
+.input-sheet .run-check { background: var(--link); color: white; }
+.input-sheet .run-check:hover { background: var(--forest); }
+.input-error { color: #9e2727; font-size: .9rem; margin-top: 10px; }
+.review-update:not(:empty) { margin: 14px 0 8px; color: var(--muted); font-size: .87rem; }
+@media (max-width: 425px) {
+  .input-grid { grid-template-columns: 1fr; gap: 6px; }
+}
+
+.price-table { overflow-x: auto; }
+.price-table td { white-space: nowrap; }
+.source-fields dd, .source-body blockquote, .source summary strong { overflow-wrap: anywhere; }
+
+@media (max-width: 425px) {
+  .finding { flex-wrap: wrap; }
+  .finding-value { margin-left: auto; }
+}
+
+.edit-actions { display: flex; flex-wrap: wrap; gap: 8px; margin-top: 14px; }
+.edit-actions button { min-height: 44px; padding: 8px 12px; border-radius: 6px; font-weight: 650; }
+.edit-toggle { background: var(--forest); color: var(--sheet); border: 1px solid var(--forest); }
+.edit-toggle:hover { background: var(--link); }
+.edit-reset { background: var(--sheet); color: var(--link); border: 1px solid #7a8a7b; }
+#case-editor:not([hidden]) { margin-bottom: 16px; }
+.next-step { margin-top: 13px; color: var(--muted); font-size: .88rem; line-height: 1.55; }
+.line strong, .invoice-head h2, .invoice-head p { overflow-wrap: anywhere; }

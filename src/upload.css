@@ -1,0 +1,19 @@
+ .upload-stage { margin-top: 24px; }
+.upload-sheet input[type=file] { display: block; width: 100%; max-width: 100%; }
+.upload-sheet .consent { justify-content: flex-start; }
+.sample-picker { display: flex; flex-wrap: wrap; align-items: end; gap: 12px; margin-top: 20px; padding-top: 16px; border-top: 1px solid var(--line); }
+.sample-picker button, .sample-picker a { padding: 9px; border-radius: 6px; font: inherit; font-size: .86rem; }
+.sample-picker label { margin-bottom: 0; }
+.sample-picker select, .confirm-docs select { display: block; min-height: 42px; max-width: 100%; margin-top: 5px; border: 1px solid #7a8a7b; border-radius: 6px; padding: 6px; color: var(--ink); background: var(--sheet); font: inherit; }
+.confirm-docs h2 { margin-bottom: 5px; }
+.confirm-docs > p { margin-bottom: 15px; color: var(--muted); }
+.confirm-docs legend { overflow-wrap: anywhere; }
+.confirm-docs .rate-review { margin-top: 14px; padding: 12px 0; border-top: 1px solid var(--line); }
+.evidence-field { min-width: 0; }
+.evidence-field label { margin-bottom: 3px; }
+.evidence-field small, .field-source summary { font-size: .77rem; color: var(--muted); }
+.field-source summary { display: block; min-height: 26px; padding: 4px 0; text-decoration: underline; }
+.field-source blockquote { padding: 7px 0; overflow-wrap: anywhere; }
+
+.pdf-link { display: inline-block; margin: 4px 0 10px; font-size: .85rem; }
+.add-rate { min-height: 42px; padding: 6px 10px; border-radius: 6px; border: 1px solid #7a8a7b; color: var(--link); background: var(--sheet); }

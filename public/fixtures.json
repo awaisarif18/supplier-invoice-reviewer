@@ -1,0 +1,11 @@
+{
+  "cases": [
+    {"id":"old-rate","name":"Old rate","invoiceId":"INV-1042","line":1,"supplierId":"NIS","supplier":"Northline Industrial Supply","item":"BRG-6204","description":"Sealed ball bearing","invoiceDate":"2026-06-18","quantity":100,"chargedCents":1200,"poId":"PO-0831","poCents":1200},
+    {"id":"correct-rate","name":"Correct rate","invoiceId":"INV-1043","line":1,"supplierId":"NIS","supplier":"Northline Industrial Supply","item":"BRG-6204","description":"Sealed ball bearing","invoiceDate":"2026-06-19","quantity":100,"chargedCents":1000,"poId":"PO-0832","poCents":1000},
+    {"id":"missing-clause","name":"Missing clause","invoiceId":"INV-1044","line":1,"supplierId":"NIS","supplier":"Northline Industrial Supply","item":"BLT-M16","description":"M16 hex bolt","invoiceDate":"2026-06-22","quantity":100,"chargedCents":1200,"poId":"PO-0833","poCents":1200}
+  ],
+  "rates": [
+    {"supplierId":"NIS","item":"BRG-6204","effectiveFrom":"2026-01-01","effectiveTo":"2026-06-01","unitCents":1200,"source":"MSA-2026 · Schedule A §2.1","document":"Original pricing schedule","clause":"The unit price for BRG-6204 sealed ball bearings is USD $12.00 for invoices dated January 1 through May 31, 2026."},
+    {"supplierId":"NIS","item":"BRG-6204","effectiveFrom":"2026-06-01","effectiveTo":null,"unitCents":1000,"source":"AMD-01 · §2.1","document":"Signed pricing amendment","clause":"Effective June 1, 2026, Northline Industrial Supply will charge USD $10.00 per unit for item BRG-6204, sealed ball bearing. This rate replaces the USD $12.00 unit price in Schedule A and applies to invoices dated on or after the effective date."}
+  ]
+}

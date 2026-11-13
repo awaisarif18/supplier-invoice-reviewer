@@ -1,0 +1,89 @@
+name: Test and deploy
+
+on:
+  pull_request:
+    branches: [main]
+  push:
+    branches: [main]
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  test:
+    runs-on: ubuntu-latest
+    timeout-minutes: 5
+    steps:
+      - uses: actions/checkout@d23441a48e516b6c34aea4fa41551a30e30af803 # v6
+        with:
+          ref: ${{ github.sha }}
+          persist-credentials: false
+      - uses: actions/setup-node@249970729cb0ef3589644e2896645e5dc5ba9c38 # v6
+        with:
+          node-version: '24'
+      - run: npm test
+
+  deploy:
+    if: github.ref == 'refs/heads/main' && github.event_name != 'pull_request' && vars.INVOICE_DEPLOY_ENABLED == 'true'
+    needs: test
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    environment:
+      name: invoice-production
+      url: https://invoice-review.awaisarif.tech
+    concurrency:
+      group: invoice-production
+      cancel-in-progress: false
+    permissions:
+      contents: read
+      id-token: write
+    steps:
+      - name: Check that this is still the tip of main
+        id: main
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: |
+          set -euo pipefail
+          tip=$(gh api "repos/$GITHUB_REPOSITORY/git/ref/heads/main" --jq .object.sha)
+          if [[ "$tip" == "$GITHUB_SHA" ]]; then
+            echo "deploy=true" >> "$GITHUB_OUTPUT"
+          else
+            echo "Skipping superseded commit $GITHUB_SHA"
+          fi
+      - uses: actions/checkout@d23441a48e516b6c34aea4fa41551a30e30af803 # v6
+        if: steps.main.outputs.deploy == 'true'
+        with:
+          ref: ${{ github.sha }}
+          persist-credentials: false
+      - uses: tailscale/github-action@064b10558093f38325e838ddea35486bdc6b1d5c # v4.4.0
+        if: steps.main.outputs.deploy == 'true'
+        with:
+          oauth-client-id: ${{ secrets.TS_OAUTH_CLIENT_ID }}
+          audience: ${{ secrets.TS_AUDIENCE }}
+          tags: tag:invoice-ci
+          ping: 100.81.110.91
+      - name: Publish and verify the tested commit
+        if: steps.main.outputs.deploy == 'true'
+        env:
+          DEPLOY_KEY: ${{ secrets.INVOICE_DEPLOY_KEY }}
+          KNOWN_HOSTS: ${{ secrets.INVOICE_KNOWN_HOSTS }}
+        run: |
+          set -euo pipefail
+          umask 077
+          ssh_dir=$(mktemp -d)
+          trap 'rm -rf -- "$ssh_dir"' EXIT
+          printf '%s\n' "$DEPLOY_KEY" > "$ssh_dir/key"
+          printf '%s\n' "$KNOWN_HOSTS" > "$ssh_dir/known_hosts"
+          git archive "$GITHUB_SHA:public" |
+            ssh -T -o BatchMode=yes -o ConnectTimeout=15 -o IdentitiesOnly=yes \
+              -o StrictHostKeyChecking=yes -o HostKeyAlgorithms=ssh-ed25519 \
+              -o UserKnownHostsFile="$ssh_dir/known_hosts" -i "$ssh_dir/key" \
+              invoice-deploy@100.81.110.91 "deploy $GITHUB_SHA"
+          live_sha=$(curl --fail --silent --show-error --retry 3 --max-time 10 \
+            "https://invoice-review.awaisarif.tech/release.txt")
+          if [[ "$live_sha" != "$GITHUB_SHA" ]]; then
+            printf 'Expected %s, live release is %s\n' "$GITHUB_SHA" "$live_sha" >&2
+            exit 1
+          fi
+          printf 'Verified live commit `%s`\n' "$live_sha" >> "$GITHUB_STEP_SUMMARY"
